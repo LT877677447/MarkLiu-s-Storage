@@ -1,0 +1,137 @@
+1. 函数式组件
+避免生命周期处理
+
+2. 子组件拆分
+重处理单独写到子组件，避免被其他状态改变导致重复执行
+
+3. 局部变量
+循环访问计算属性的优化，用局部变量替代
+
+4. 活用v-show v-if
+切换用v-show 首屏v-if
+
+5. 使用keep-alive
+组件缓存，复用组件，不重复创建实例
+
+6. 活用延迟加载
+
+7. 分批处理
+让页面更快显示内容，分批渲染
+
+8. 非响应模式
+在不需要响应式数据的地方，数据转换成非响应式
+
+9. 仅渲染可视化部分
+加快渲染，列表懒加载，图片懒加载
+
+10.骨架屏
+加载时用户体验 
+
+11.webpack 
+mode development预设配置
+devtool sourcemap源映射
+entry 打包入口
+output 输出文件设置
+resolve 别名
+optimization 文件压缩
+devServer 开发服务
+plugins 插件
+module.rules 处理加载资源的loader
+
+webpack构建流程：
+1.初始化参数
+从配置文件、shell命令行接收、合并参数，得到最终参数
+2.初始化compiler对象、加载插件、执行run方法
+3.确定入口，根据entry找到所有入口文件
+4.编译模块，从入口文件出发，调用匹配的loader，编译模块，找出他依赖的模块，递归这个过程
+5.得到loader编译完所有模块后，得到所有模块编译后的内容和他们之间的依赖关系
+6.输出资源，根据入口跟模块的依赖关系，组装成一个个包含多个模块的chunk，再把每个chunk转换成单一的文件，加载到输出列表
+7.根据配置，确定输出目录和文件名，写到文件系统
+在以上过程中，webpack会在特定时间点发出特定事件，插件可以监听到这些事件，做一些处理，改变运行结果
+
+webpack优化可以大致分为两个方向，打包速度优化，打包体积优化，回答的时候也可以从这两个方面分开去讲
+打包速度优化：
+1.利用插件开启多线程打包
+2.精确webpack查找文件范围，提升速度，配置Alias，extensions
+3.减少需要解析的文件，module.rule.exclude排除不需要处理的文件目录
+4.避免重复编译第三方库，echarts，element-ui这种三方库，合到一个vendor中，这样改变代码时，不会重新编译三方库
+
+
+
+12. 事件代理、localStorage缓存、serviceWorker离线缓存、webWorker
+
+优化LCP
+导致 LCP 不佳的最常见原因是：
+
+缓慢的「服务器响应速度」
+	使用缓存 TTFB
+	
+阻塞渲染的 JavaScript 和 CSS
+	css、js文件gzip压缩、懒加载
+缓慢的「资源加载速度」
+	图片格式webp、CDN、预加载
+「客户端渲染」
+
+优化TTI
+
+使用 PRPL 模式实现即时加载
+PRPL 是四个英文单词的首字母缩写，它描述了一种可以提高网页加载速度和交互性的模式
+
+推送 (Push)（或预加载）最重要的资源。
+尽快渲染 (Render) 初始路线。
+预缓存 (Pre-cache) 剩余资产。
+延迟加载 (Lazy load) 其他路线和非关键资产。
+
+vue3相比vue2.x有什么改变、提升？
+
+改变
+	源码
+		使用monorepo、Typescript管理、开发源码，提升自身代码可维护性
+		减少源码体积，移除一些冷门feature，引入tree-shaking技术
+	性能
+		init数据劫持阶段：数据响应式修改
+			问题：
+			只能使用$set添加新属性
+			递归调用Object.defineProperty转化数据对象，开销大
+			改进：
+			使用Proxy API代理整个对象，添加新属性不再有限制
+			在proxy的getter中执行递归响应式转换，这样只在真正访问到内部对象时才会响应式，而不是无脑递归，提升开销
+		patch组件更新阶段：
+			优化组件编译阶段的结果来优化patch更新
+			vue2的数据更新重新渲染是组件级别的，vnode对比的速度和模版大小正相关，和动态节点数量无关，极端情况是模版只有少量动态节点
+			vue3模版编译生成Block tree，将模版基于动态节点切割成一个个嵌套区块，vnode更新性能提升为与动态内容数量相关
+	优化语法、API
+		Composition API
+
+
+
+
+nuxt开发官网 仿 https://nitropack.io/pricing
+vue3插件开发全局弹窗组件
+react开发、小程序开发
+
+promise原理
+disk cache | memory cache
+	查找缓存优先级、根据资源请求的发起方式决定放在哪里
+indexedDB
+	浏览器本地数据库，存比较大的资源，音、视频文件
+全局错误捕获
+	全局window对象事件监听，onerror unhandledrejection
+
+vite
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
